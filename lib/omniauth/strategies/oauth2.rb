@@ -85,7 +85,17 @@ module OmniAuth
     protected
 
       def build_access_token
+        $stdout.puts "---------------------- verifier ----------------------"
+        $stdout.puts request.params["code"]
         verifier = request.params["code"]
+        
+        $stdout.puts "---------------------- callback_url ----------------------"
+        $stdout.puts callback_url
+        $stdout.puts "---------------------- token_params ----------------------"
+        $stdout.puts token_params.to_hash(:symbolize_keys => true)
+        $stdout.puts "---------------------- auth_token_params ----------------------"
+        $stdout.puts options.auth_token_params
+        
         client.auth_code.get_token(verifier, {:redirect_uri => callback_url}.merge(token_params.to_hash(:symbolize_keys => true)), deep_symbolize(options.auth_token_params))
       end
 
